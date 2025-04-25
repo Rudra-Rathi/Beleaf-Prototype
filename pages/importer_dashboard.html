@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Importer Dashboard</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4fdf4;
+            color: #333;
+        }
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: #2a9d8f;
+            color: white;
+        }
+        .navbar h1 {
+            margin: 0;
+        }
+        /* Search Filters */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+        }
+        select {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #aaa;
+        }
+        /* Product Grid */
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .product-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+        .product-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .product-card h3 {
+            margin: 10px 0 5px;
+            color: #2a9d8f;
+        }
+        .product-card p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1>Importer Dashboard</h1>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters">
+        <select id="areaFilter">
+            <option value="">Select Area</option>
+            <option value="Pune">Pune</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Nagpur">Nagpur</option>
+        </select>
+
+        <select id="productFilter">
+            <option value="">Select Product</option>
+            <option value="Tomato">Tomato</option>
+            <option value="Potato">Potato</option>
+            <option value="Onion">Onion</option>
+        </select>
+    </div>
+
+    <!-- Product List -->
+    <div class="product-container" id="productList">
+        <div class="product-card" data-area="Pune" data-product="Tomato">
+            <img src="../Images/tomato.jpg" alt="Tomato">
+            <h3>Tomato</h3>
+            <p>Location: Pune</p>
+            <p>Price: ₹40/kg</p>
+        </div>
+
+        <div class="product-card" data-area="Mumbai" data-product="Potato">
+            <img src="potato.jpg" alt="Potato">
+            <h3>Potato</h3>
+            <p>Location: Mumbai</p>
+            <p>Price: ₹30/kg</p>
+        </div>
+
+        <div class="product-card" data-area="Nagpur" data-product="Onion">
+            <img src="onion.jpg" alt="Onion">
+            <h3>Onion</h3>
+            <p>Location: Nagpur</p>
+            <p>Price: ₹50/kg</p>
+        </div>
+
+        <div class="product-card" data-area="Pune" data-product="Onion">
+            <img src="onion.jpg" alt="Onion">
+            <h3>Onion</h3>
+            <p>Location: Pune</p>
+            <p>Price: ₹48/kg</p>
+        </div>
+    </div>
+
+    <script>
+        // Filtering Logic
+        document.getElementById("areaFilter").addEventListener("change", filterProducts);
+        document.getElementById("productFilter").addEventListener("change", filterProducts);
+
+        function filterProducts() {
+            let area = document.getElementById("areaFilter").value.toLowerCase();
+            let product = document.getElementById("productFilter").value.toLowerCase();
+            let products = document.querySelectorAll(".product-card");
+
+            products.forEach(productCard => {
+                let productType = productCard.getAttribute("data-product").toLowerCase();
+                let productArea = productCard.getAttribute("data-area").toLowerCase();
+
+                if ((area === "" || area === productArea) && (product === "" || product === productType)) {
+                    productCard.style.display = "block";
+                } else {
+                    productCard.style.display = "none";
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
